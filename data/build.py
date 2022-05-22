@@ -12,7 +12,7 @@ class MnistDataset(Dataset):
         self.img_dir = img_dir
         self.transform = transform
 
-        self.label_df = pd.read_csv(label_path)
+        self.label_df = pd.read_csv(label_path).sample(10000).reset_index(drop=True)
         
     def __len__(self):
         return len(self.label_df)
@@ -34,20 +34,21 @@ def build_transform():
     ])
     return img_transforms
 
+
 def build_loader():
     
     img_transforms = build_transform()
         
     train_dataset = MnistDataset(
-        label_path=r"/DATA_1/Projects/exercise/mnist_pytorch/mnist/train_labels.csv",
-        img_dir=r"/DATA_1/Projects/exercise/mnist_pytorch/mnist/train",
+        label_path=r"/DATA_1/Projects/exercise/mnist_digits_classification_pytorch/mnist/train_labels.csv",
+        img_dir=r"/DATA_1/Projects/exercise/mnist_digits_classification_pytorch/mnist/train",
         transform=img_transforms
     )
     train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True)
     
     test_dataset = MnistDataset(
-        label_path=r"/DATA_1/Projects/exercise/mnist_pytorch/mnist/test_labels.csv",
-        img_dir=r"/DATA_1/Projects/exercise/mnist_pytorch/mnist/test",
+        label_path=r"/DATA_1/Projects/exercise/mnist_digits_classification_pytorch/mnist/test_labels.csv",
+        img_dir=r"/DATA_1/Projects/exercise/mnist_digits_classification_pytorch/mnist/test",
         transform=img_transforms
     )
     test_loader = DataLoader(test_dataset, batch_size=256, shuffle=False)
