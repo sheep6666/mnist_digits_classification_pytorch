@@ -1,9 +1,10 @@
 import torch
+import cfg
 
 def build_optimizer(model):
     optimizer = torch.optim.SGD(
         model.parameters(), 
-        lr=1e-1,
+        lr=cfg.initial_lr,
         momentum=0.5,
         weight_decay=0
     )
